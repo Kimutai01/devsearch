@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_25_060824) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_25_061409) do
+  create_table "profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "username"
+    t.string "headline"
+    t.string "bio"
+    t.string "location"
+    t.string "profile_image"
+    t.string "social_github"
+    t.string "social_twitter"
+    t.string "social_linkedin"
+    t.string "social_youtube"
+    t.string "social_website"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -21,4 +40,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_060824) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "profiles", "users"
 end
