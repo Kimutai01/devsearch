@@ -1,14 +1,17 @@
 class MessagesController < ApplicationController
     def index
         @messages = Message.all
+        render json: @messages
     end
     
     def show
         @message = Message.find(params[:id])
+        render json: @message
     end
     
     def new
         @message = Message.new
+        render json: @message
     end
     
     def create
@@ -39,10 +42,4 @@ class MessagesController < ApplicationController
         redirect_to messages_url, :notice => "Successfully destroyed message."
     end
     end
-    
-    # Path: app/models/message.rb
-    class Message < ActiveRecord::Base
-    attr_accessible :body, :title
-    validates :title, :presence => true
-    validates :body, :presence => true
 end

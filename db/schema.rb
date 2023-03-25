@@ -12,12 +12,9 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_03_25_130155) do
   create_table "messages", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "subject"
-    t.string "body"
-    t.integer "sender_id", null: false
-    t.integer "recipient_id", null: false
+    t.integer "sender_id"
+    t.integer "recipient_id"
+    t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"
@@ -74,8 +71,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_130155) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "messages", "recipients"
-  add_foreign_key "messages", "senders"
+  add_foreign_key "messages", "profiles", column: "recipient_id"
+  add_foreign_key "messages", "profiles", column: "sender_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "projects", "profiles"
   add_foreign_key "skills", "profiles"
