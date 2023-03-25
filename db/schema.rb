@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_25_061409) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_25_125753) do
+  create_table "messages", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "subject"
+    t.string "body"
+    t.integer "sender_id", null: false
+    t.integer "recipient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_messages_on_recipient_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -30,6 +43,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_061409) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "profile_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_skills_on_profile_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -40,5 +62,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_061409) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "messages", "recipients"
+  add_foreign_key "messages", "senders"
   add_foreign_key "profiles", "users"
+  add_foreign_key "skills", "profiles"
 end
